@@ -1,4 +1,10 @@
 console.log('Loaded!');
 //change the text of main-
 var element=document.getElementById('main-text');
-element.innerHTML='new value';
+element.innerHTML='New value';
+
+//move the image
+var img=document.getElementById;
+img.onclick=function(){
+    img.style.marginLeft='100px';
+};
