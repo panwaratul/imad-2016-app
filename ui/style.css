@@ -1,6 +1,6 @@
 body {
     font-family: sans-serif;
-    background-color: pink;
+
     margin-top: 60px;
 }
 
@@ -17,16 +17,14 @@ body {
 }
 
 .img-medium {
-    height: 100px;
+    height: 200px;
 }
 
-
-   .container{
-     max-width: 600px;
-    margin: 0 auto;
-    color: rgb(0, 124, 255);
-    font-family: sans-serif;
-    padding-left: 20px;
-    padding-right: 20px;
-          
-        }
+ .container{
+                max-width: 800px;
+                margin: 0 auto;
+                color: #423f3f;
+                font-family: san-serif;
+                padding-left: 20px;
+                padding-right: 2px;
+         }
