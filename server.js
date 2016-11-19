@@ -5,90 +5,105 @@ var path = require('path');
 var app = express();
 app.use(morgan('combined'));
 
-var articles={
-'article-one':{
-    title: 'Article-one||Atul panwar',
-    heading:'Article one',
-    date:'october 8,2016',
-    content:`<p>
-            This the the content for my first article    This the the content for my first article   This the the content for my first article   This the the content for my first article   This the the content for my first article   This the the content for my first article   This the the content for my first article   
+var articles= {
+'article-one': {
+  title: 'Article One | Neha Panwar',
+  heading: 'Article One',
+  date: 'Sep 5,2016',
+  content: `<p>
+                This is the content of my first article.This is the content of my first article.This is the content of my first article.This is the content of my first article.
+            </p>
+            
+            <p>
+                This is the content of my first article.This is the content of my first article.This is the content of my first article.This is the content of my first article.
             </p>
             <p>
-            This the the content for my first article    This the the content for my first article   This the the content for my first article   This the the content for my first article   This the the content for my first article   This the the content for my first article   This the the content for my first article   
-            </p>
-            <p>
-            This the the content for my first article    This the the content for my first article   This the the content for my first article   This the the content for my first article   This the the content for my first article   This the the content for my first article   This the the content for my first article   
+                This is the content of my first article.This is the content of my first article.This is the content of my first article.This is the content of my first article.
             </p>`
-     
+  
 },
-'article-two':{
-title: 'Article-two||Atul panwar',
-heading:'Article two',
-date:'october 15,2016',
-content:`<p>
-    This the the content for my second article    
-    </p>`
-},
-'article-three':{
-    title: 'Article-three||Atul panwar',
-heading:'Article three',
-date:'october 20,2016',
-content:`<p>
-    This the the content for my third article    
-    </p>`
+'article-two': {
+    title: 'Article Two | Neha Panwar',
+  heading: 'Article Two',
+  date: 'Sep 6,2016',
+  content: `<p>
+                This is the content of my second article.
+            </p>`
+            
+         },
+'article-three': {
+    title: 'Article Three | Neha Panwar',
+  heading: 'Article Three',
+  date: 'Sep 7,2016',
+  content: `<p>
+                This is the content of my third article.
+            </p>`
+            
+           
+}
+};
+function createTemplate(data){
+var title= data.title;
+var date= data.date;
+var heading= data.heading;
+var content= data.content;
+
+var htmlTemplate=`
+<html>
+<head>
+    <title>
+     ${title}
+        </title>
+        <meta name="viewport" content="width=device-width , initial-scale=1" />
+        <link href="/ui/style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+         <div>
+         <a href="/">Home</a>
+         </div>
+         <hr/>
+         <h3>
+            ${heading}
+         </h3>
+        
+         <div>
+             ${date}
+         </div>
+         <div>
+           ${content}
+         </div>
+    </div>
+    </body>
+</html>
+`;
+return htmlTemplate;
 }
 
-};
-function createtemplate(data){
-    title=data.title;
-    heading=data.heading;
-    date=data.date;
-    content=data.content;
-var htmltemplate=`<html>
-    <head>
-        <title>
-        ${title}
-        </title>
-        
-        <meta name="viewport" content="width=device-width,initial-scale=1"/>
-          <link href="/ui/style.css" rel="stylesheet" />
-    </head>
-    <body>
-        <div class="container" >
-        <div>
-            <a href="/">Home </a>
-        </div>
-        <hr/>
-        <h3>
-        ${heading}
-        </h3>
-        <div>
-            ${date}
-        </div >
-            <div >
-            ${content}
-            </div>
-        </div>
-    </body>
-</html>`;
-return htmltemplate;
-}
-    
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
 var counter=0;
 app.get('/counter',function(req,res){
-    counter =counter+1;
-    res.send(counter.toString());
+counter=counter + 1;
+res.send(counter.toString());
+
 });
 
-app.get('/:articleName',function(req,res){
-    var articleName=req.params.articleName;
- res.send(createtemplate(articles[articleName]));
+var names=[];
+app.get('/submit-name', function (req, res){ //URL:/submit-name?name=XXXXX
+    //Get the name from request object
+    var name = req.query.name;
+    names.push(name);
+    //JSON javascript object notation
+    res.send(JSON.stringify(names));
 });
 
+app.get('/:articleName',function (req, res){
+    var articleName = req.params.articleName;
+ res.send(createTemplate(articles[articleName]));  
+});
 
 app.get('/ui/style.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'style.css'));
